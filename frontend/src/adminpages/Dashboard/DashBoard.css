@@ -1,0 +1,30 @@
+.dashboard_outlet {
+  position: absolute;
+  left: 19vw;
+  top: 0px;
+  background: #fafafa;
+  background-color: linear-gradient(
+    247deg,
+    #eef7ff 3.42%,
+    rgba(238, 247, 255, 0) 73.71%,
+    rgba(238, 247, 255, 0) 107.04%
+  );
+  height: 100vh;
+  width: 81vw;
+  /* border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px; */
+  border-right: 9px solid #77bcbb;
+  border-top: 9px solid #77bcbb;
+  border-bottom: 9px solid #77bcbb;
+  overflow: auto;
+  border-radius: 0px 15px 15px 0px;
+  display: flex;
+  flex-direction: column;
+  /* width: "100%"; */
+}
+.ge3s_dashboard_border {
+  height: 100vh !important;
+  border-left: 9px solid #77bcbb;
+  border-top: 9px solid #77bcbb;
+  border-bottom: 9px solid #77bcbb;
+}

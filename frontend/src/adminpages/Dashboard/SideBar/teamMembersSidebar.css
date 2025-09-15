@@ -1,0 +1,36 @@
+.team-members_notification_num {
+  height: 18px;
+  width: 18px;
+  background-color: #ff3a3a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  border-radius: 9999px;
+  color: #fff;
+}
+
+.team_sidebar-links_container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.team_sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+}
+
+.team_sidebar-link_name {
+  flex-grow: 1;
+}
+
+.team_sidebar-link_active {
+  background-color: #77bcbb;
+  border-radius: 6px;
+  color: #fff;
+}

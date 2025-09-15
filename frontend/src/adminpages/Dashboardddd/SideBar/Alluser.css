@@ -1,0 +1,34 @@
+/* Hide Scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.list-group-item:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Blur + Gray Transparent Background */
+.blur-box {
+  background: rgba(249, 251, 251, 0.799); /* light gray transparent */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Active item ka blue background override */
+.list-group-item.active {
+  background-color: #e9ecef !important; /* halka gray */
+  color: #212529 !important;           /* dark text */
+  border-color: #dee2e6 !important;    /* border same as list-group */
+}
+
+/* Focus outline bhi hata do */
+.list-group-item:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
