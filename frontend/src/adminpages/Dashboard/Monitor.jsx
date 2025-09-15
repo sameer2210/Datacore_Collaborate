@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { Box, Grid, Typography } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import CreateReport from "../owner/CreateReport";
-import "./dashboardStyles.css";
-import ReportCard from "./ReportCard";
-import ReportForVerification from "./ReportForVerification";
-import DashboardVettingTable from "./DashboardVettingTable";
-import useFetch from "../../utils/hooks/useFetch";
-import { reportEndpoints } from "../../api/endpoints/report.endpoints";
-import { deleteReport } from "../../api/reportApis.js";
-import LoaderSpinner from "../../components/common/LoaderSpinner";
-import SkeletonCard from "../../components/common/SkeletonCard";
-import EmptyState from "../../components/common/EmptyState";
+import { Box, Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
+import { reportEndpoints } from '../../api/endpoints/report.endpoints';
+import { deleteReport } from '../../api/reportApis.js';
+import EmptyState from '../../components/common/EmptyState';
+import SkeletonCard from '../../components/common/SkeletonCard';
+import useFetch from '../../utils/hooks/useFetch';
+import CreateReport from '../owner/CreateReport';
+import './dashboardStyles.css';
+import DashboardVettingTable from './DashboardVettingTable';
+import ReportCard from './ReportCard';
+import ReportForVerification from './ReportForVerification';
 
 const Monitor = () => {
   const dashBoardOption = useRef(null);
@@ -25,7 +24,7 @@ const Monitor = () => {
     error: readyReportsErr,
     refetch: refetchReadyReports,
   } = useFetch(reportEndpoints.getReports, {
-    status: "ready",
+    status: 'ready',
   });
 
   const {
@@ -34,13 +33,13 @@ const Monitor = () => {
     error: draftsError,
     refetch: refetchDrafts,
   } = useFetch(reportEndpoints.getReports, {
-    status: "draft",
+    status: 'draft',
     version: draftVersion,
   });
 
   useEffect(() => {
-    localStorage.removeItem("resetEmail");
-    localStorage.removeItem("resetToken");
+    localStorage.removeItem('resetEmail');
+    localStorage.removeItem('resetToken');
   }, []);
 
   useEffect(() => {
@@ -49,23 +48,23 @@ const Monitor = () => {
     }
   }, [draftsData]);
 
-  const handleDeleteDraft = async (id) => {
+  const handleDeleteDraft = async id => {
     try {
       await deleteReport(id);
-      setDrafts((prevDrafts) => prevDrafts.filter((draft) => draft.id !== id));
-      setDraftVersion((prev) => prev + 1);
+      setDrafts(prevDrafts => prevDrafts.filter(draft => draft.id !== id));
+      setDraftVersion(prev => prev + 1);
     } catch (error) {
-      console.error("Error deleting draft:", error);
+      console.error('Error deleting draft:', error);
       refetchDrafts();
     }
   };
 
-  const handleDeleteReadyReport = async (id) => {
+  const handleDeleteReadyReport = async id => {
     try {
       await deleteReport(id);
       refetchReadyReports();
     } catch (error) {
-      console.error("Error deleting ready report:", error);
+      console.error('Error deleting ready report:', error);
       refetchReadyReports();
     }
   };
@@ -78,44 +77,44 @@ const Monitor = () => {
         <>
           <Box
             sx={{
-              height: "100%",
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "2rem",
+              height: '100%',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '2rem',
               p: 3,
             }}
           >
             <Box>
-              <Box sx={{ display: "flex", gap: 3 }}>
-                <Box sx={{ width: "200px" }}></Box>
-                <div style={{ width: "1px" }}></div>
+              <Box sx={{ display: 'flex', gap: 4 }}>
+                <Box sx={{ width: '200px' }}></Box>
+                <div style={{ width: '1px' }}></div>
                 <h2 className="dashboard-report_heading">Drafts</h2>
               </Box>
 
               <Box
                 sx={{
-                  display: "flex",
-                  gap: "1.5rem",
-                  alignItems: "stretch",
+                  display: 'flex',
+                  gap: '1.5rem',
+                  alignItems: 'stretch',
                 }}
                 ref={dashBoardOption}
               >
                 <Box
                   sx={{
-                    borderRadius: "10px",
-                    border: "1px dashed #369D9C",
-                    background: "#FFF",
-                    minWidth: "200px",
-                    height: "150px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: ".5rem",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "#F6FFF7",
+                    borderRadius: '10px',
+                    border: '1px dashed #369D9C',
+                    background: '#FFF',
+                    minWidth: '200px',
+                    height: '150px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '.5rem',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: '#F6FFF7',
                     },
                   }}
                   onClick={() => setCreateReport(true)}
@@ -145,23 +144,22 @@ const Monitor = () => {
                   </svg>
                   <Typography
                     sx={{
-                      fontSize: "12px",
-                      fontFamily: "Inter",
+                      fontSize: '12px',
+                      fontFamily: 'Inter',
                       fontWeight: 500,
-                      background:
-                        "linear-gradient(102deg, #369D9C 0%, #28814D 100%)",
-                      backgroundClip: "text",
-                      "-webkitBackgroundClip": "text",
-                      "-webkitTextFillColor": "transparent",
+                      background: 'linear-gradient(102deg, #369D9C 0%, #28814D 100%)',
+                      backgroundClip: 'text',
+                      '-webkitBackgroundClip': 'text',
+                      '-webkitTextFillColor': 'transparent',
                     }}
                   >
-                    Initiate Report Generation
+                   Add New User
                   </Typography>
                 </Box>
 
                 <div
                   style={{
-                    borderRight: "1px solid #DBDBDB",
+                    borderRight: '1px solid #DBDBDB',
                   }}
                 ></div>
 
@@ -190,11 +188,7 @@ const Monitor = () => {
                   ) : (
                     // Show actual draft cards
                     drafts.map((item, index) => (
-                      <ReportCard
-                        key={`draft-${item.id}`}
-                        {...item}
-                        onDelete={handleDeleteDraft}
-                      />
+                      <ReportCard key={`draft-${item.id}`} {...item} onDelete={handleDeleteDraft} />
                     ))
                   )}
                 </div>
@@ -202,9 +196,9 @@ const Monitor = () => {
             </Box>
 
             <Box>
-              <h2 className="dashboard-report_heading">
+              {/* <h2 className="dashboard-report_heading">
                 Your SI Reports which are ready for vetting.
-              </h2>
+              </h2> */}
 
               {/* <Box sx={{ overflowX: 'auto' }}>
                 <Grid container spacing={2} sx={{ minWidth: '600px' }}>
@@ -242,7 +236,7 @@ const Monitor = () => {
                   />
                 ) : (
                   // Show actual ready reports
-                  readyReports.reports.map((report) => (
+                  readyReports.reports.map(report => (
                     <ReportForVerification
                       key={report?.id}
                       {...report}
@@ -255,16 +249,14 @@ const Monitor = () => {
 
             <Box
               sx={{
-                width: "100%",
-                backgroundColor: "#fff",
-                border: "1px solid #E4E4E4",
-                borderRadius: "8px",
-                padding: "1.3rem 1rem",
+                width: '100%',
+                backgroundColor: '#fff',
+                border: '1px solid #E4E4E4',
+                borderRadius: '8px',
+                padding: '1.3rem 1rem',
               }}
             >
-              <h2 className="dashboard-report_heading">
-                Your SI Reports Sent for Vetting
-              </h2>
+              <h2 className="dashboard-report_heading">Your SI Reports Sent for Vetting</h2>
               <DashboardVettingTable />
             </Box>
           </Box>

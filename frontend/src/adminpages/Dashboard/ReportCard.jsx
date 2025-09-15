@@ -1,22 +1,542 @@
+// import { IconButton, Tooltip } from '@mui/material';
+// import { useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+// import emptyuser from '../../assets/emptyuser.avif';
+// import threeDots from '../../assets/threeDots.svg';
+// import trash from '../../assets/trash.svg';
+// import constant from '../../constant';
+// import { convertDateToDaysAgo } from '../../utils/dateFunctions';
+// import { useTaggingStore } from '../owner/dataPoints/assignments/chatStore';
+// import './dashboardStyles.css';
+
+// const ReportCard = ({ onDelete, ...report }) => {
+//   const { allUsers, fetchUsers } = useTaggingStore();
+
+//   useEffect(() => {
+//     if (!allUsers || allUsers.length === 0) {
+//       fetchUsers();
+//     }
+//   }, [fetchUsers, allUsers]);
+
+//   let percentage =
+//     ((report?.completedStatus?.done / report?.completedStatus?.total) * 100)?.toFixed(0) || 0;
+//   percentage = isNaN(percentage) ? 0 : percentage;
+//   const conicEnd = `${percentage}%`;
+//   const conicGradient = `conic-gradient(#369d9c 0%, #28814d ${conicEnd}, #c8ecfb ${conicEnd})`;
+//   const maxVisible = 3;
+
+//   const editedAt = convertDateToDaysAgo(report?.updatedAt);
+
+//   const assignedUsers = report?.assignUsers || [];
+//   const matchedUsers = assignedUsers
+//     .map(userId => allUsers.find(user => user.id === userId))
+//     .filter(Boolean);
+
+//   const handleDelete = e => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     if (onDelete) {
+//       onDelete(report.id);
+//     }
+//   };
+
+//   return (
+//     <Link
+//       to={`/add-data-points/${report?.id}`}
+//       // target="_blank"
+//       style={{ textDecoration: 'none', color: 'black' }}
+//     >
+//       <div className="report_card">
+//         <div className="report_card-heading_container">
+//           <div className="report_card-heading-notifications">
+//             <h3 className="report_card-heading">{report?.name}</h3>
+//             {report?.unReadMessage > 0 && (
+//               <div className="report_card-notification">{report.unReadMessage}</div>
+//             )}
+//           </div>
+
+//           <div>
+//             <Tooltip
+//               title={
+//                 <IconButton
+//                   onClick={handleDelete}
+//                   size="small"
+//                   sx={{
+//                     color: 'red',
+//                     fontSize: '12px',
+//                     '&:hover': {
+//                       backgroundColor: 'transparent', // Remove hover background
+//                     },
+//                     padding: '4px', // Add some padding around text and icon
+//                     display: 'flex',
+//                     gap: '4px', // Space between icon and text
+//                   }}
+//                   disableRipple // Remove ripple effect
+//                 >
+//                   <img src={trash} alt="trash" />
+//                   Delete
+//                 </IconButton>
+//               }
+//               componentsProps={{
+//                 tooltip: {
+//                   sx: {
+//                     bgcolor: 'white',
+//                     '& .MuiTooltip-arrow': {
+//                       color: 'red',
+//                     },
+//                     boxShadow: '0px 2px 5px rgba(0,0,0,0.15)',
+//                     borderRadius: '8px',
+//                   },
+//                 },
+//               }}
+//             >
+//               <IconButton size="small">
+//                 <img
+//                   style={{ cursor: 'pointer' }}
+//                   src={threeDots}
+//                   height={20}
+//                   width={20}
+//                   alt="Actions"
+//                 />
+//               </IconButton>
+//             </Tooltip>
+//           </div>
+//         </div>
+
+//         <div className="report_card-progress-container">
+//           <div
+//             className="progress-bar"
+//             style={{
+//               width: `42px`,
+//               height: `42px`,
+//               background: `radial-gradient(closest-side, white 79%, transparent 80% 100%), ${conicGradient}`,
+//               boxShadow: '0px 3.94px 3.94px 0px #228d8c54',
+//             }}
+//           >
+//             <div className="progress-text">{isNaN(percentage) ? 0 : percentage}%</div>
+//           </div>
+//           <div className="report_card-status">Completed</div>
+//         </div>
+
+//         <div className="report_card-edit_container">
+//           <div>
+//             <span className="edited-status">
+//               {editedAt?.includes(':') ? `Edited at ${editedAt}` : `Edited ${editedAt}`}
+//             </span>
+//           </div>
+//           <div className="report_card-profile_images">
+//             <div className="profile-images-container">
+//               {/* {users.slice(0, maxVisible).map((item, index) => (
+//                 <img
+//                   key={index}
+//                   src={topUser}
+//                   alt="user"
+//                   className="profile-image"
+//                   height={24}
+//                   width={24}
+//                 />
+//               ))}
+//               {users.length > maxVisible && (
+//                 <div className="extra-count">+{users.length - maxVisible}</div>
+//               )} */}
+//               {matchedUsers.slice(0, maxVisible).map((user, index) => (
+//                 <img
+//                   key={index}
+//                   src={
+//                     user.profileImage === 'null'
+//                       ? emptyuser
+//                       : `${constant.IMG_URL}/${user.profileImage}`
+//                   }
+//                   alt={user.name}
+//                   className="profile-image"
+//                   height={24}
+//                   width={24}
+//                 />
+//               ))}
+//               {matchedUsers.length > maxVisible && (
+//                 <div className="extra-count">+{matchedUsers.length - maxVisible}</div>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </Link>
+//   );
+// };
+
+// export default ReportCard;
+
+// import { IconButton, Tooltip } from '@mui/material';
+// import { useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+// import emptyuser from '../../assets/emptyuser.avif';
+// import threeDots from '../../assets/threeDots.svg';
+// import trash from '../../assets/trash.svg';
+// import constant from '../../constant';
+// import { convertDateToDaysAgo } from '../../utils/dateFunctions';
+// import { useTaggingStore } from '../owner/dataPoints/assignments/chatStore';
+// import './dashboardStyles.css';
+
+// const ReportCard = ({ onDelete, ...report }) => {
+//   const { allUsers, fetchUsers } = useTaggingStore();
+
+//   useEffect(() => {
+//     if (!allUsers || allUsers.length === 0) {
+//       fetchUsers();
+//     }
+//   }, [fetchUsers, allUsers]);
+
+//   let percentage =
+//     ((report?.completedStatus?.done / report?.completedStatus?.total) * 100)?.toFixed(0) || 0;
+//   percentage = isNaN(percentage) ? 0 : parseInt(percentage, 10); // Ensure int
+//   const conicEnd = `${percentage}%`;
+//   const conicGradient = `conic-gradient(#369d9c 0%, #28814d ${conicEnd}, #c8ecfb ${conicEnd})`;
+//   const maxVisible = 3;
+
+//   const editedAt = convertDateToDaysAgo(report?.updatedAt);
+
+//   const assignedUsers = report?.assignUsers || [];
+//   const matchedUsers = assignedUsers
+//     .map(userId => allUsers.find(user => user.id === userId))
+//     .filter(Boolean);
+
+//   const handleDelete = e => {
+//     e.preventDefault();
+//     e.stopPropagation(); // Prevent Link navigation
+//     console.log('Delete clicked for report:', report.id); // Debug
+//     if (onDelete) {
+//       onDelete(report.id);
+//     }
+//   };
+
+//   const handleCardClick = e => {
+//     console.log('Card clicked, navigating to:', `/add-data-points/${report.id}`); // Debug
+//     // No need for extra logic; Link handles it
+//   };
+
+//   return (
+//     <Link
+//       to={`/add-data-points/${report?.id}`}
+//       style={{ textDecoration: 'none', color: 'inherit' }} // Inherit colors
+//       onClick={handleCardClick} // Debug log
+//     >
+//       <div className="report_card">
+//         <div className="report_card-heading_container">
+//           <div className="report_card-heading-notifications">
+//             <h3 className="report_card-heading">{report?.name}</h3>
+//             {report?.unReadMessage > 0 && (
+//               <div className="report_card-notification">{report.unReadMessage}</div>
+//             )}
+//           </div>
+
+//           <div>
+//             <Tooltip
+//               title={
+//                 <IconButton
+//                   onClick={handleDelete}
+//                   size="small"
+//                   sx={{
+//                     color: 'red',
+//                     fontSize: '12px',
+//                     '&:hover': { backgroundColor: 'transparent' },
+//                     padding: '4px',
+//                     display: 'flex',
+//                     gap: '4px',
+//                   }}
+//                   disableRipple
+//                 >
+//                   <img src={trash} alt="trash" style={{ width: 16, height: 16 }} />
+//                   Delete
+//                 </IconButton>
+//               }
+//               componentsProps={{
+//                 tooltip: {
+//                   sx: {
+//                     bgcolor: 'white',
+//                     '& .MuiTooltip-arrow': { color: 'red' },
+//                     boxShadow: '0px 2px 5px rgba(0,0,0,0.15)',
+//                     borderRadius: '8px',
+//                   },
+//                 },
+//               }}
+//               placement="left" // Position tooltip better
+//             >
+//               <IconButton size="small" onClick={e => e.stopPropagation()}>
+//                 {' '}
+//                 {/* Extra stopProp for dots */}
+//                 <img
+//                   style={{ cursor: 'pointer' }}
+//                   src={threeDots}
+//                   height={20}
+//                   width={20}
+//                   alt="Actions"
+//                 />
+//               </IconButton>
+//             </Tooltip>
+//           </div>
+//         </div>
+
+//         <div className="report_card-progress-container">
+//           <div
+//             className="progress-bar"
+//             style={{
+//               background: `radial-gradient(closest-side, white 79%, transparent 80% 100%), ${conicGradient}`,
+//               boxShadow: '0px 3.94px 3.94px 0px #228d8c54',
+//             }}
+//           >
+//             <div className="progress-text">{percentage}%</div>
+//           </div>
+//           <div className="report_card-status">Completed</div>
+//         </div>
+
+//         <div className="report_card-edit_container">
+//           <div>
+//             <span className="edited-status">
+//               {editedAt?.includes(':') ? `Edited at ${editedAt}` : `Edited ${editedAt}`}
+//             </span>
+//           </div>
+//           <div className="report_card-profile_images">
+//             <div className="profile-images-container">
+//               {matchedUsers.slice(0, maxVisible).map((user, index) => (
+//                 <img
+//                   key={index}
+//                   src={
+//                     user.profileImage == null // Fix: Check for null/undefined
+//                       ? emptyuser
+//                       : `${constant.IMG_URL}/${user.profileImage}`
+//                   }
+//                   alt={user.name || 'User'}
+//                   className="profile-image"
+//                 />
+//               ))}
+//               {matchedUsers.length > maxVisible && (
+//                 <div className="extra-count">+{matchedUsers.length - maxVisible}</div>
+//               )}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </Link>
+//   );
+// };
+
+// export default ReportCard;
+
+
+//------------------------------------------------------
+
+
+// import { IconButton, Tooltip } from '@mui/material';
+// import { useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+// import { deleteReport } from '../../api/reportApis'; // Adjust path if needed
+// import emptyuser from '../../assets/emptyuser.avif';
+// import threeDots from '../../assets/threeDots.svg';
+// import trash from '../../assets/trash.svg';
+// import constant from '../../constant';
+// import { convertDateToDaysAgo } from '../../utils/dateFunctions';
+// import { useTaggingStore } from '../owner/dataPoints/assignments/chatStore';
+// import './dashboardStyles.css';
+
+// const ReportCard = ({ onDelete, ...report }) => {
+//   const { allUsers, fetchUsers, allReports, fetchReports } = useTaggingStore();
+
+//   useEffect(() => {
+//     if (!allUsers || allUsers.length === 0) {
+//       console.log('Fetching users in ReportCard...');
+//       fetchUsers();
+//     }
+//     if (!allReports || allReports.length === 0) {
+//       console.log('Fetching reports in ReportCard...');
+//       fetchReports();
+//     }
+//   }, [fetchUsers, allUsers, fetchReports, allReports]);
+
+//   let percentage =
+//     ((report?.completedStatus?.done / report?.completedStatus?.total) * 100)?.toFixed(0) || 0;
+//   percentage = isNaN(percentage) ? 0 : percentage;
+//   const conicEnd = `${percentage}%`;
+//   const conicGradient = `conic-gradient(#369d9c 0%, #28814d ${conicEnd}, #c8ecfb ${conicEnd})`;
+//   const maxVisible = 3;
+
+//   const editedAt = convertDateToDaysAgo(report?.updatedAt);
+
+//   const assignedUsers = report?.assignUsers || [];
+//   const matchedUsers = assignedUsers
+//     .map(userId => allUsers?.find(user => user.id === userId))
+//     .filter(Boolean);
+
+//   const handleDelete = async e => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     console.log('Delete report:', report.id);
+//     try {
+//       const response = await deleteReport(report.id);
+//       if (!response.error) {
+//         console.log('Report deleted successfully');
+//         fetchReports(); // Refresh store
+//       } else {
+//         console.error('Delete failed:', response.error);
+//       }
+//     } catch (error) {
+//       console.error('Delete error:', error);
+//     }
+//     if (onDelete) onDelete(report.id);
+//   };
+
+//   const handleHover = () => {
+//     console.log('Hover detected - CSS transition should apply'); // Test hover
+//   };
+
+//   return (
+//     <Link to={`/add-data-points/${report?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+//       <div
+//         className="report_card"
+//         onMouseEnter={handleHover} // Debug hover
+//       >
+//         <div className="report_card-heading_container">
+//           <div className="report_card-heading-notifications">
+//             <h3 className="report_card-heading">{report?.name}</h3>
+//             {report?.unReadMessage > 0 && (
+//               <div className="report_card-notification">{report.unReadMessage}</div>
+//             )}
+//           </div>
+
+//           <div>
+//             <Tooltip
+//               title={
+//                 <IconButton
+//                   onClick={handleDelete}
+//                   size="small"
+//                   sx={{
+//                     color: 'red',
+//                     fontSize: '12px',
+//                     '&:hover': { backgroundColor: 'transparent' },
+//                     padding: '4px',
+//                     display: 'flex',
+//                     gap: '4px',
+//                   }}
+//                   disableRipple
+//                 >
+//                   <img src={trash} alt="trash" />
+//                   Delete
+//                 </IconButton>
+//               }
+//               componentsProps={{
+//                 tooltip: {
+//                   sx: {
+//                     bgcolor: 'white',
+//                     '& .MuiTooltip-arrow': { color: 'red' },
+//                     boxShadow: '0px 2px 5px rgba(0,0,0,0.15)',
+//                     borderRadius: '8px',
+//                   },
+//                 },
+//               }}
+//             >
+//               <IconButton size="small">
+//                 <img
+//                   style={{ cursor: 'pointer' }}
+//                   src={threeDots}
+//                   height={20}
+//                   width={20}
+//                   alt="Actions"
+//                 />
+//               </IconButton>
+//             </Tooltip>
+//           </div>
+//         </div>
+
+//         <div className="report_card-progress-container">
+//           <div
+//             className="progress-bar"
+//             style={{
+//               // Removed width/height - use CSS now
+//               background: `radial-gradient(closest-side, white 79%, transparent 80% 100%), ${conicGradient}`,
+//               boxShadow: '0px 3.94px 3.94px 0px #228d8c54',
+//             }}
+//           >
+//             <div className="progress-text">{percentage}%</div>
+//           </div>
+//           <div className="report_card-status">Completed</div>
+//         </div>
+
+//         <div className="report_card-edit_container">
+//           <div>
+//             <span className="edited-status">
+//               {editedAt?.includes(':') ? `Edited at ${editedAt}` : `Edited ${editedAt}`}
+//             </span>
+//           </div>
+//           <div className="report_card-profile_images">
+//             <div className="profile-images-container">
+//               {matchedUsers.slice(0, maxVisible).map((user, index) => (
+//                 <img
+//                   key={index}
+//                   src={
+//                     user.profileImage == null
+//                       ? emptyuser
+//                       : `${constant.IMG_URL}/${user.profileImage}`
+//                   }
+//                   alt={user.name || 'User'}
+//                   className="profile-image"
+//                   // Removed inline height/width - use CSS
+//                 />
+//               ))}
+//               {matchedUsers.length > maxVisible && (
+//                 <div className="extra-count">+{matchedUsers.length - maxVisible}</div>
+//               )}
+//               {matchedUsers.length === 0 && <span>No assignees</span>}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </Link>
+//   );
+// };
+
+// export default ReportCard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { IconButton, Tooltip } from '@mui/material';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { deleteReport } from '../../api/reportApis'; // Adjust path if needed
 import emptyuser from '../../assets/emptyuser.avif';
 import threeDots from '../../assets/threeDots.svg';
 import trash from '../../assets/trash.svg';
 import constant from '../../constant';
 import { convertDateToDaysAgo } from '../../utils/dateFunctions';
 import { useTaggingStore } from '../owner/dataPoints/assignments/chatStore';
-import './dashboardStyles.css';
+// Removed external CSS import - embedding styles below
 
 const ReportCard = ({ onDelete, ...report }) => {
-  const { allUsers, fetchUsers } = useTaggingStore();
+  const { allUsers, fetchUsers, allReports, fetchReports } = useTaggingStore();
 
   useEffect(() => {
     if (!allUsers || allUsers.length === 0) {
+      console.log('Fetching users in ReportCard...');
       fetchUsers();
     }
-  }, [fetchUsers, allUsers]);
+    if (!allReports || allReports.length === 0) {
+      console.log('Fetching reports in ReportCard...');
+      fetchReports();
+    }
+  }, [fetchUsers, allUsers, fetchReports, allReports]);
 
   let percentage =
     ((report?.completedStatus?.done / report?.completedStatus?.total) * 100)?.toFixed(0) || 0;
@@ -29,138 +549,401 @@ const ReportCard = ({ onDelete, ...report }) => {
 
   const assignedUsers = report?.assignUsers || [];
   const matchedUsers = assignedUsers
-    .map(userId => allUsers.find(user => user.id === userId))
+    .map(userId => allUsers?.find(user => user.id === userId))
     .filter(Boolean);
 
-  const handleDelete = e => {
+  const handleDelete = async e => {
     e.preventDefault();
     e.stopPropagation();
-    if (onDelete) {
-      onDelete(report.id);
+    console.log('Delete report:', report.id);
+    try {
+      const response = await deleteReport(report.id);
+      if (!response.error) {
+        console.log('Report deleted successfully');
+        fetchReports(); // Refresh store
+      } else {
+        console.error('Delete failed:', response.error);
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
     }
+    if (onDelete) onDelete(report.id);
   };
 
   return (
-    <Link
-      to={`/add-data-points/${report?.id}`}
-      // target="_blank"
-      style={{ textDecoration: 'none', color: 'black' }}
-    >
-      <div className="report_card">
-        <div className="report_card-heading_container">
-          <div className="report_card-heading-notifications">
-            <h3 className="report_card-heading">{report?.name}</h3>
-            {report?.unReadMessage > 0 && (
-              <div className="report_card-notification">{report.unReadMessage}</div>
-            )}
+    <>
+      <style>{`
+        :root {
+          --greenGradient: linear-gradient(101.74deg, #369d9c 0%, #28814d 100%);
+        }
+
+        .dashboard-report_heading {
+          font-size: 1rem;
+          font-weight: 500;
+          margin-bottom: 16px;
+          padding: 0;
+          color: #1c1c1c;
+        }
+
+        .drafts-container {
+          display: flex;
+          gap: 1rem;
+          flex-grow: 1;
+          overflow-x: auto;
+        }
+
+        .report_card {
+          min-width: 17rem;
+          padding: 1rem;
+          max-height: 9.3rem;
+          border: 1px solid #e6e6e6;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          background-color: #fff;
+          transition: box-shadow 0.2s ease; /* Smooth hover */
+          cursor: pointer; /* Indicate clickable */
+        }
+
+        .report_card:hover {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Demo-like hover effect */
+        }
+
+        .report_card-heading_container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .report_card-heading-notifications {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+        }
+
+        .report_card-heading {
+          font-size: 1rem;
+          font-weight: 500;
+          margin: 0; /* Clean up */
+        }
+
+        .report_card-notification {
+          background-color: #ff3a3a;
+          padding: 0.2rem 0.5rem;
+          border-radius: 100%;
+          height: 1rem;
+          width: 1rem;
+          font-size: 0.6rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: 500;
+          color: white;
+        }
+
+        .report_card-progress-container {
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+        }
+
+        .progress-bar {
+          width: 42px !important; /* Consistent with inline, forced */
+          height: 42px !important;
+          border-radius: 100%;
+          background: radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(#369d9c 0%, #28814d 75%, #c8ecfb 75%); /* Fallback */
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0px 3.94px 3.94px 0px #228d8c54;
+        }
+
+        .progress-text {
+          font-size: 10px;
+          font-weight: 400;
+          color: #000;
+          /* Removed position: absolute; flex centers it now */
+        }
+
+        .report_card-status {
+          color: #464646;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+
+        .report_card-edit_container {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+        }
+
+        .edited-status {
+          font-size: 11px;
+          font-weight: 400;
+          color: #699191;
+        }
+
+        .report_card-profile_images {
+          /* Wrapper for images */
+        }
+
+        .profile-images-container {
+          display: flex;
+          flex-direction: row-reverse; /* Stack from right for overlap effect */
+          position: relative;
+        }
+
+        .profile-image {
+          width: 24px !important;
+          height: 24px !important;
+          border-radius: 50%;
+          border: 2px solid #fff; /* White border for overlap pop */
+          margin-left: -8px; /* Overlap amount – adjust for demo tightness */
+          object-fit: cover; /* Ensure images fit circle */
+          z-index: 1;
+        }
+
+        .extra-count {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background-color: #ff3a3a;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 10px;
+          font-weight: 500;
+          margin-left: -8px;
+          z-index: 2; /* On top */
+          border: 2px solid #fff;
+        }
+
+        /* Vetting/Reports Table Styles (from your CSS, polished) */
+        .dashboard-verification_container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .verification_card {
+          max-width: 22rem;
+          width: 100%;
+          border: 1px solid #e6e6e6;
+          border-radius: 10px;
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.3rem;
+          background-color: #fff;
+          cursor: pointer;
+          transition: box-shadow 0.2s ease;
+        }
+
+        .verification_card:hover {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .verification_card-heading_container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1.2rem;
+        }
+
+        .verification_card-heading {
+          font-size: 1rem;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 180px;
+        }
+
+        .verification_card-status_container {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+          flex-shrink: 0;
+        }
+
+        .verification_card-status_div {
+          max-width: 5.3rem;
+          width: 100%;
+          max-height: 1.5rem;
+          height: 100%;
+          padding: 0.25rem 0.5rem;
+          font-size: 11px;
+          border-radius: 6px;
+          background-color: #f0f0f0; /* Add subtle bg for visibility */
+        }
+
+        .verification_card-progress_container {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .verification_card-percent {
+          font-size: 1.4rem;
+          font-weight: 600;
+          line-height: 29.05px;
+        }
+
+        .verification_card-percent-name {
+          font-weight: 400;
+          font-size: 0.8rem;
+        }
+
+        .verification_card-grading_container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .verification_card-grade {
+          font-weight: 500;
+          font-size: 0.9rem;
+          color: #4b4646;
+        }
+
+        .verification_card-grade_date {
+          font-size: 0.75rem;
+          color: #9b9b9b;
+          font-weight: 400;
+        }
+
+        .vetting_table-container {
+          overflow-x: auto;
+        }
+
+        .vetting_table-heading {
+          color: #727272;
+          font-size: 0.8rem;
+          padding: 0.6rem;
+          min-width: 120px;
+          font-weight: 600; /* Bold headers */
+          background-color: #f8f9fa; /* Subtle header bg */
+          border-bottom: 1px solid #e6e6e6;
+        }
+
+        .vetting_table-cell {
+          font-size: 0.8rem;
+          padding: 0.9rem 0.6rem;
+          font-weight: 400;
+          min-width: 120px;
+          border-bottom: 1px solid #f0f0f0; /* Striped rows */
+        }
+
+        /* Even rows for table */
+        .vetting_table-row:nth-child(even) .vetting_table-cell {
+          background-color: #fafafa;
+        }
+      `}</style>
+      <Link
+        to={`/add-data-points/${report?.id}`}
+        style={{ textDecoration: 'none', color: 'black' }}
+      >
+        <div className="report_card">
+          <div className="report_card-heading_container">
+            <div className="report_card-heading-notifications">
+              <h3 className="report_card-heading">{report?.name}</h3>
+              {report?.unReadMessage > 0 && (
+                <div className="report_card-notification">{report.unReadMessage}</div>
+              )}
+            </div>
+
+            <div>
+              <Tooltip
+                title={
+                  <IconButton
+                    onClick={handleDelete}
+                    size="small"
+                    sx={{
+                      color: 'red',
+                      fontSize: '12px',
+                      '&:hover': { backgroundColor: 'transparent' },
+                      padding: '4px',
+                      display: 'flex',
+                      gap: '4px',
+                    }}
+                    disableRipple
+                  >
+                    <img src={trash} alt="trash" />
+                    Delete
+                  </IconButton>
+                }
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      bgcolor: 'white',
+                      '& .MuiTooltip-arrow': { color: 'red' },
+                      boxShadow: '0px 2px 5px rgba(0,0,0,0.15)',
+                      borderRadius: '8px',
+                    },
+                  },
+                }}
+              >
+                <IconButton size="small">
+                  <img
+                    style={{ cursor: 'pointer' }}
+                    src={threeDots}
+                    height={20}
+                    width={20}
+                    alt="Actions"
+                  />
+                </IconButton>
+              </Tooltip>
+            </div>
           </div>
 
-          <div>
-            <Tooltip
-              title={
-                <IconButton
-                  onClick={handleDelete}
-                  size="small"
-                  sx={{
-                    color: 'red',
-                    fontSize: '12px',
-                    '&:hover': {
-                      backgroundColor: 'transparent', // Remove hover background
-                    },
-                    padding: '4px', // Add some padding around text and icon
-                    display: 'flex',
-                    gap: '4px', // Space between icon and text
-                  }}
-                  disableRipple // Remove ripple effect
-                >
-                  <img src={trash} alt="trash" />
-                  Delete
-                </IconButton>
-              }
-              componentsProps={{
-                tooltip: {
-                  sx: {
-                    bgcolor: 'white',
-                    '& .MuiTooltip-arrow': {
-                      color: 'red',
-                    },
-                    boxShadow: '0px 2px 5px rgba(0,0,0,0.15)',
-                    borderRadius: '8px',
-                  },
-                },
+          <div className="report_card-progress-container">
+            <div
+              className="progress-bar"
+              style={{
+                // Inline background override for dynamic conic
+                background: `radial-gradient(closest-side, white 79%, transparent 80% 100%), ${conicGradient}`,
+                boxShadow: '0px 3.94px 3.94px 0px #228d8c54',
               }}
             >
-              <IconButton size="small">
-                <img
-                  style={{ cursor: 'pointer' }}
-                  src={threeDots}
-                  height={20}
-                  width={20}
-                  alt="Actions"
-                />
-              </IconButton>
-            </Tooltip>
+              <div className="progress-text">{percentage}%</div>
+            </div>
+            <div className="report_card-status">Completed</div>
           </div>
-        </div>
 
-        <div className="report_card-progress-container">
-          <div
-            className="progress-bar"
-            style={{
-              width: `42px`,
-              height: `42px`,
-              background: `radial-gradient(closest-side, white 79%, transparent 80% 100%), ${conicGradient}`,
-              boxShadow: '0px 3.94px 3.94px 0px #228d8c54',
-            }}
-          >
-            <div className="progress-text">{isNaN(percentage) ? 0 : percentage}%</div>
-          </div>
-          <div className="report_card-status">Completed</div>
-        </div>
-
-        <div className="report_card-edit_container">
-          <div>
-            <span className="edited-status">
-              {editedAt?.includes(':') ? `Edited at ${editedAt}` : `Edited ${editedAt}`}
-            </span>
-          </div>
-          <div className="report_card-profile_images">
-            <div className="profile-images-container">
-              {/* {users.slice(0, maxVisible).map((item, index) => (
-                <img
-                  key={index}
-                  src={topUser}
-                  alt="user"
-                  className="profile-image"
-                  height={24}
-                  width={24}
-                />
-              ))}
-              {users.length > maxVisible && (
-                <div className="extra-count">+{users.length - maxVisible}</div>
-              )} */}
-              {matchedUsers.slice(0, maxVisible).map((user, index) => (
-                <img
-                  key={index}
-                  src={
-                    user.profileImage === 'null'
-                      ? emptyuser
-                      : `${constant.IMG_URL}/${user.profileImage}`
-                  }
-                  alt={user.name}
-                  className="profile-image"
-                  height={24}
-                  width={24}
-                />
-              ))}
-              {matchedUsers.length > maxVisible && (
-                <div className="extra-count">+{matchedUsers.length - maxVisible}</div>
-              )}
+          <div className="report_card-edit_container">
+            <div>
+              <span className="edited-status">
+                {editedAt?.includes(':') ? `Edited at ${editedAt}` : `Edited ${editedAt}`}
+              </span>
+            </div>
+            <div className="report_card-profile_images">
+              <div className="profile-images-container">
+                {matchedUsers.slice(0, maxVisible).map((user, index) => (
+                  <img
+                    key={index}
+                    src={
+                      user.profileImage == null
+                        ? emptyuser
+                        : `${constant.IMG_URL}/${user.profileImage}`
+                    }
+                    alt={user.name || 'User'}
+                    className="profile-image"
+                  />
+                ))}
+                {matchedUsers.length > maxVisible && (
+                  <div className="extra-count">+{matchedUsers.length - maxVisible}</div>
+                )}
+                {matchedUsers.length === 0 && <span>No assignees</span>}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </>
   );
 };
 

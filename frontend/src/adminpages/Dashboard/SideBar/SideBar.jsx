@@ -1,15 +1,14 @@
-import "./SideBar.css";
-import { NavLink, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import premium from "../../../assets/premium.svg";
-import ge3sLogo from "../../../assets/ge3s-logo.png";
-import useOrganizationContext from "../../../context/OrgContext";
-import defaultLogo from "../../../assets/defaultOrg.svg";
-import constant from "../../../constant";
-import BookCall from "../../owner/BookCall";
-import premiumimg from "../../../assets/images/premiumplan.png"
-import basicimg from "../../../assets/images/basicplan.png"
-import { activePlan } from "../../../api/subscription";
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { activePlan } from '../../../api/subscription';
+import defaultLogo from '../../../assets/defaultOrg.svg';
+import ge3sLogo from '../../../assets/ge3s-logo.png';
+import basicimg from '../../../assets/images/basicplan.png';
+import premiumimg from '../../../assets/images/premiumplan.png';
+import constant from '../../../constant';
+import useOrganizationContext from '../../../context/OrgContext';
+import BookCall from '../../owner/BookCall';
+import './SideBar.css';
 
 function SideBar() {
   // Retrieve organization data from context
@@ -22,6 +21,9 @@ function SideBar() {
   // State to manage the visibility of the booking call modal
   const [bookCall, setBookCall] = useState(false);
 
+  // State to manage the collapse/expand of All Tabs dropdown
+  const [isAllTabsOpen, setIsAllTabsOpen] = useState(false);
+
   useEffect(() => {
     const fetchActivePlan = async () => {
       const { data, error } = await activePlan();
@@ -32,50 +34,73 @@ function SideBar() {
     fetchActivePlan();
   }, []);
 
+  // Auto-expand All Tabs if user is on any all-tabs route
+  useEffect(() => {
+    if (location.pathname.includes('/all-tabs/')) {
+      setIsAllTabsOpen(true);
+    }
+  }, [location.pathname]);
+
+  // All tabs data
+  const allTabsItems = [
+    { name: 'Companies', path: 'all-tabs/company', icon: '🏢' },
+    { name: 'Production', path: 'all-tabs/production', icon: '⚙️' },
+    { name: 'Operational', path: 'all-tabs/operational', icon: '📊' },
+    { name: 'Electrical', path: 'all-tabs/electrical', icon: '⚡' },
+    { name: 'Certifications', path: 'all-tabs/certifications', icon: '📜' },
+    { name: 'Uploads', path: 'all-tabs/uploads', icon: '📁' },
+    { name: 'HVAC', path: 'all-tabs/hvac', icon: '🌡️' },
+    { name: 'SCADA', path: 'all-tabs/scada', icon: '💻' },
+    { name: 'Thermal', path: 'all-tabs/thermal', icon: '🔥' },
+    { name: 'Equipment', path: 'all-tabs/equipment', icon: '🔧' },
+    { name: 'PDF Files', path: 'all-tabs/pdf', icon: '📄' },
+  ];
+
+  const toggleAllTabs = () => {
+    setIsAllTabsOpen(!isAllTabsOpen);
+  };
+
   return (
     <div className="sidemenu">
       <div className="sidemanu_content">
         <div className="sidemenu_brand">
           <img
-            src={
-              orgData?.logo
-                ? `${constant.IMG_URL}/${orgData?.logo}`
-                : defaultLogo
-            }
+            src={orgData?.logo ? `${constant.IMG_URL}/${orgData?.logo}` : defaultLogo}
             alt="logo"
             height={80}
             width={80}
           />
 
           <div className="subscription_side">
-            <h6>{orgData?.name ?? "Dummy Name"}</h6>
+            <h6>{orgData?.name ?? 'Dummy Name'}</h6>
           </div>
-
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', margin: '5px 0 20px 0' }}>
-          {
-            activePlanData?.plan_name === 'Premium' ? <img src={premiumimg} alt="Premium Plan" style={{ width: '9rem' }} />
-              :
-              <img src={basicimg} alt="Basic Plan" style={{ width: '7rem' }} />
-          }
-
+          {activePlanData?.plan_name === 'Premium' ? (
+            <img src={premiumimg} alt="Premium Plan" style={{ width: '9rem' }} />
+          ) : (
+            <img src={basicimg} alt="Basic Plan" style={{ width: '7rem' }} />
+          )}
         </div>
 
         <div>
+          {/* Dashboard Link */}
           <NavLink
             to="monitor"
-            className={(navLink) =>
-              navLink.isActive || location.pathname === "/admin-dash" || location.pathname === "/admin-dash/"
-                ? "sidebar_menu_item checked"
-                : "sidebar_menu_item"
+            className={navLink =>
+              navLink.isActive ||
+              location.pathname === '/admin-dash' ||
+              location.pathname === '/admin-dash/'
+                ? 'sidebar_menu_item checked'
+                : 'sidebar_menu_item'
             }
           >
             <div
               id="Dashboard"
               style={{
-                display: "flex",
-                gap: "0.8rem",
-                alignItems: "center",
+                display: 'flex',
+                gap: '0.8rem',
+                alignItems: 'center',
               }}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -89,147 +114,76 @@ function SideBar() {
             </div>
           </NavLink>
 
-          <NavLink
-            to="team-members"
-            className={(navLink) =>
-              navLink.isActive
-                ? "sidebar_menu_item checked"
-                : "sidebar_menu_item"
-            }
-          >
+          {/* All Tabs Dropdown */}
+          <div className="all-tabs-container">
+            {/* All Tabs Header - Clickable to toggle */}
             <div
-              style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}
+              className={`sidebar_menu_item ${
+                location.pathname.includes('/all-tabs/') ? 'checked' : ''
+              } all-tabs-header`}
+              onClick={toggleAllTabs}
+              style={{ cursor: 'pointer' }}
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.72662 10.2271C9.40085 10.2271 10.7569 8.87109 10.7569 7.1968C10.7569 5.52256 9.40085 4.1665 7.72662 4.1665C6.05238 4.1665 4.69632 5.52256 4.69632 7.1968C4.69632 8.87109 6.05238 10.2271 7.72662 10.2271ZM7.72662 5.68165C8.55993 5.68165 9.24177 6.36347 9.24177 7.1968C9.24177 8.03014 8.55993 8.71192 7.72662 8.71192C6.89329 8.71192 6.21147 8.03014 6.21147 7.1968C6.21147 6.36347 6.89329 5.68165 7.72662 5.68165ZM1.66602 14.7726C1.66602 12.7574 5.70389 11.7423 7.72662 11.7423C9.74935 11.7423 13.7873 12.7574 13.7873 14.7726V16.2878H1.66602V14.7726ZM3.18117 14.7726C3.34783 14.2271 5.68874 13.2574 7.72662 13.2574C9.7721 13.2574 12.1206 14.2347 12.2721 14.7726H3.18117ZM16.0599 10.9847V13.2574H14.5448V10.9847H12.2721V9.4695H14.5448V7.1968H16.0599V9.4695H18.3327V10.9847H16.0599Z"
-                  fill="#96CDCC"
-                />
-              </svg>
-
-              <span className="menu--text">Team Members</span>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.8rem',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                }}
+              >
+                <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M7.72662 10.2271C9.40085 10.2271 10.7569 8.87109 10.7569 7.1968C10.7569 5.52256 9.40085 4.1665 7.72662 4.1665C6.05238 4.1665 4.69632 5.52256 4.69632 7.1968C4.69632 8.87109 6.05238 10.2271 7.72662 10.2271ZM7.72662 5.68165C8.55993 5.68165 9.24177 6.36347 9.24177 7.1968C9.24177 8.03014 8.55993 8.71192 7.72662 8.71192C6.89329 8.71192 6.21147 8.03014 6.21147 7.1968C6.21147 6.36347 6.89329 5.68165 7.72662 5.68165ZM1.66602 14.7726C1.66602 12.7574 5.70389 11.7423 7.72662 11.7423C9.74935 11.7423 13.7873 12.7574 13.7873 14.7726V16.2878H1.66602V14.7726ZM3.18117 14.7726C3.34783 14.2271 5.68874 13.2574 7.72662 13.2574C9.7721 13.2574 12.1206 14.2347 12.2721 14.7726H3.18117ZM16.0599 10.9847V13.2574H14.5448V10.9847H12.2721V9.4695H14.5448V7.1968H16.0599V9.4695H18.3327V10.9847H16.0599Z"
+                      fill="#96CDCC"
+                    />
+                  </svg>
+                  <span className="menu--text">All Tabs</span>
+                </div>
+                {/* Dropdown Arrow */}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  style={{
+                    transform: isAllTabsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.3s ease',
+                  }}
+                >
+                  <path
+                    d="M3 4.5L6 7.5L9 4.5"
+                    stroke="#96CDCC"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </div>
-          </NavLink>
 
-          <NavLink
-            to="reports"
-            className={(navLink) =>
-              navLink.isActive
-                ? "sidebar_menu_item checked"
-                : "sidebar_menu_item"
-            }
-          >
-            <div
-              style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <g clip-path="url(#clip0_3174_1184)">
-                  <path
-                    d="M13.125 17.5H4.375C4.20924 17.5 4.05027 17.4342 3.93306 17.3169C3.81585 17.1997 3.75 17.0408 3.75 16.875V5.625C3.75 5.45924 3.81585 5.30027 3.93306 5.18306C4.05027 5.06585 4.20924 5 4.375 5H10.625L13.75 8.125V16.875C13.75 17.0408 13.6842 17.1997 13.5669 17.3169C13.4497 17.4342 13.2908 17.5 13.125 17.5Z"
-                    stroke="#96CDCC"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M6.25 5V3.125C6.25 2.95924 6.31585 2.80027 6.43306 2.68306C6.55027 2.56585 6.70924 2.5 6.875 2.5H13.125L16.25 5.625V14.375C16.25 14.5408 16.1842 14.6997 16.0669 14.8169C15.9497 14.9342 15.7908 15 15.625 15H13.75"
-                    stroke="#96CDCC"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M6.875 11.875H10.625"
-                    stroke="#96CDCC"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M6.875 14.375H10.625"
-                    stroke="#96CDCC"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_3174_1184">
-                    <rect width="20" height="20" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-
-              <span className="menu--text">Reports</span>
+            {/* Dropdown Content */}
+            <div className={`all-tabs-dropdown ${isAllTabsOpen ? 'open' : ''}`}>
+              {allTabsItems.map((item, index) => (
+                <NavLink
+                  key={index}
+                  to={item.path}
+                  className={navLink =>
+                    navLink.isActive ? 'sidebar_submenu_item checked' : 'sidebar_submenu_item'
+                  }
+                >
+                  <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
+                    <span style={{ fontSize: '14px' }}>{item.icon}</span>
+                    <span className="submenu--text">{item.name}</span>
+                  </div>
+                </NavLink>
+              ))}
             </div>
-          </NavLink>
-
-          <NavLink
-            to="subscriptions"
-            className={(navLink) =>
-              navLink.isActive
-                ? "sidebar_menu_item checked"
-                : "sidebar_menu_item"
-            }
-          >
-            <div
-              style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                  d="M16.25 3.125H3.75C3.40482 3.125 3.125 3.40482 3.125 3.75V16.25C3.125 16.5952 3.40482 16.875 3.75 16.875H16.25C16.5952 16.875 16.875 16.5952 16.875 16.25V3.75C16.875 3.40482 16.5952 3.125 16.25 3.125Z"
-                  stroke="#96CDCC"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M13.75 1.875V4.375"
-                  stroke="#96CDCC"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M6.25 1.875V4.375"
-                  stroke="#96CDCC"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M3.125 6.875H16.875"
-                  stroke="#96CDCC"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M10 10.9375C10.3452 10.9375 10.625 10.6577 10.625 10.3125C10.625 9.96732 10.3452 9.6875 10 9.6875C9.65482 9.6875 9.375 9.96732 9.375 10.3125C9.375 10.6577 9.65482 10.9375 10 10.9375Z"
-                  fill="#96CDCC"
-                />
-                <path
-                  d="M13.4375 10.9375C13.7827 10.9375 14.0625 10.6577 14.0625 10.3125C14.0625 9.96732 13.7827 9.6875 13.4375 9.6875C13.0923 9.6875 12.8125 9.96732 12.8125 10.3125C12.8125 10.6577 13.0923 10.9375 13.4375 10.9375Z"
-                  fill="#96CDCC"
-                />
-                <path
-                  d="M6.5625 14.0625C6.90768 14.0625 7.1875 13.7827 7.1875 13.4375C7.1875 13.0923 6.90768 12.8125 6.5625 12.8125C6.21732 12.8125 5.9375 13.0923 5.9375 13.4375C5.9375 13.7827 6.21732 14.0625 6.5625 14.0625Z"
-                  fill="#96CDCC"
-                />
-                <path
-                  d="M10 14.0625C10.3452 14.0625 10.625 13.7827 10.625 13.4375C10.625 13.0923 10.3452 12.8125 10 12.8125C9.65482 12.8125 9.375 13.0923 9.375 13.4375C9.375 13.7827 9.65482 14.0625 10 14.0625Z"
-                  fill="#96CDCC"
-                />
-                <path
-                  d="M13.4375 14.0625C13.7827 14.0625 14.0625 13.7827 14.0625 13.4375C14.0625 13.0923 13.7827 12.8125 13.4375 12.8125C13.0923 12.8125 12.8125 13.0923 12.8125 13.4375C12.8125 13.7827 13.0923 14.0625 13.4375 14.0625Z"
-                  fill="#96CDCC"
-                />
-              </svg>
-              <span className="menu--text">Subscription</span>
-            </div>
-          </NavLink>
+          </div>
         </div>
       </div>
       <div className="sidebar_powered_by">
@@ -240,10 +194,7 @@ function SideBar() {
         <div className="brand_wrapper">
           <span>Book a call with a Senior Consultant.</span>
         </div>
-        <button
-          className="sidebar_connect_btn"
-          onClick={() => setBookCall(true)}
-        >
+        <button className="sidebar_connect_btn" onClick={() => setBookCall(true)}>
           Connect With an Expert
         </button>
 

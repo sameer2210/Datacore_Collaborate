@@ -56,7 +56,7 @@
 }
 
 .premium_button::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 1/2;
   left: 0;
@@ -64,12 +64,7 @@
   height: 100%;
   border-radius: 5px;
   z-index: -1;
-  background: linear-gradient(
-    274.93deg,
-    #f6d839 0.06%,
-    #fff4b9 50.3%,
-    #f8dc4c 103.64%
-  );
+  background: linear-gradient(274.93deg, #f6d839 0.06%, #fff4b9 50.3%, #f8dc4c 103.64%);
   padding: 2px; /* Adjusts the thickness of the border */
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -289,4 +284,89 @@
 .sidebar_logo {
   height: 3.2rem;
   width: 3.2rem;
+}
+
+/* All Tabs Dropdown Styles - Following existing sidebar theme */
+.all-tabs-container {
+  margin-bottom: 0;
+}
+
+.all-tabs-header {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.all-tabs-header:hover {
+  color: #fff;
+  background: #77bcbb;
+}
+
+.all-tabs-header:hover svg path {
+  fill: #fff;
+}
+
+.all-tabs-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease;
+  opacity: 0;
+  background-color: #f6f8f7;
+  border-left: 3px solid #77bcbb;
+  margin-left: 15px;
+  margin-top: 5px;
+  border-radius: 0 4px 4px 0;
+}
+
+.all-tabs-dropdown.open {
+  max-height: 600px;
+  opacity: 1;
+  transition: max-height 0.4s ease-in, opacity 0.3s ease;
+}
+
+.sidebar_submenu_item {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none;
+  color: #2e2e2e;
+  font-size: 0.7rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  margin: 2px 8px;
+  position: relative;
+  background: transparent;
+  z-index: 9;
+}
+
+.sidebar_submenu_item:hover {
+  color: #fff;
+  background: #77bcbb;
+  text-decoration: none;
+}
+
+.sidebar_submenu_item.checked {
+  color: #fff;
+  background: #77bcbb;
+  font-weight: 500;
+}
+
+.submenu--text {
+  font-size: 0.7rem;
+  font-weight: inherit;
+}
+
+/* Smooth animation for the dropdown arrow */
+.all-tabs-header svg {
+  transition: transform 0.4s ease;
+}
+
+/* Add subtle bottom spacing for dropdown */
+.all-tabs-dropdown .sidebar_submenu_item:last-child {
+  margin-bottom: 8px;
+}
+
+/* Ensure consistent styling with main menu items */
+.all-tabs-header.checked {
+  color: #fff;
+  background: #77bcbb;
 }
