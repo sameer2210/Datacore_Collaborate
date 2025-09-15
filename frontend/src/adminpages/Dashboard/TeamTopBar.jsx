@@ -7,14 +7,14 @@ import emptyuser from "../../assets/emptyuser.avif";
 import logoutImg from "../../assets/logout.svg";
 import LogoutDialog from "./LogoutDialog";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuthContext from "../../context/AuthContext";
 import constant from "../../constant";
 import TeamChatTray from "./TeamChatTray";
 import { getAllChatMessages } from "../../api/chat";
 
 const TeamTopBar = () => {
   const chatIconRef = useRef(null);
-  const { user: userData, logout } = useAuth();
+  const { user: userData, logout } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);

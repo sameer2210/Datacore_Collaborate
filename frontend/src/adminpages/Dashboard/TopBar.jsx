@@ -17,7 +17,7 @@ import logoutImg from "../../assets/logout.svg";
 import chat from "../../assets/chats.svg";
 import bell from "../../assets/bell.svg";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useAuthContext from "../../context/AuthContext";
 import GradientButton from "../common/GradientButton";
 import OutlinedButton from "../common/OutlinedButton";
 import LogoutDialog from "./LogoutDialog";
@@ -29,7 +29,7 @@ import { getAllChatMessages } from "../../api/chat";
 const TopBar = () => {
   const chatIconRef = useRef(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const { logout } = useAuth();
+  const { logout } = useAuthContext();
   const { data: orgData, loading, error, userData } = useOrganizationContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);

@@ -54,9 +54,9 @@ function SideBar() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', margin: '5px 0 20px 0' }}>
           {
-            activePlanData?.plan_name === 'Premium' ? <img src={premiumimg} style={{ width: '9rem' }} />
+            activePlanData?.plan_name === 'Premium' ? <img src={premiumimg} alt="Premium Plan" style={{ width: '9rem' }} />
               :
-              <img src={basicimg} style={{ width: '7rem' }} />
+              <img src={basicimg} alt="Basic Plan" style={{ width: '7rem' }} />
           }
 
         </div>
@@ -65,7 +65,7 @@ function SideBar() {
           <NavLink
             to="monitor"
             className={(navLink) =>
-              navLink.isActive || location.pathname === "/"
+              navLink.isActive || location.pathname === "/admin-dash" || location.pathname === "/admin-dash/"
                 ? "sidebar_menu_item checked"
                 : "sidebar_menu_item"
             }

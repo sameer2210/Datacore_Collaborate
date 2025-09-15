@@ -9,6 +9,9 @@ import DashboardVettingTable from "./DashboardVettingTable";
 import useFetch from "../../utils/hooks/useFetch";
 import { reportEndpoints } from "../../api/endpoints/report.endpoints";
 import { deleteReport } from "../../api/reportApis.js";
+import LoaderSpinner from "../../components/common/LoaderSpinner";
+import SkeletonCard from "../../components/common/SkeletonCard";
+import EmptyState from "../../components/common/EmptyState";
 
 const Monitor = () => {
   const dashBoardOption = useRef(null);
@@ -163,13 +166,37 @@ const Monitor = () => {
                 ></div>
 
                 <div className="drafts-container">
-                  {drafts.map((item, index) => (
-                    <ReportCard
-                      key={`draft-${item.id}`}
-                      {...item}
-                      onDelete={handleDeleteDraft}
+                  {draftsLoading ? (
+                    // Show skeleton cards while loading
+                    Array.from({ length: 3 }).map((_, index) => (
+                      <SkeletonCard key={`draft-skeleton-${index}`} />
+                    ))
+                  ) : draftsError ? (
+                    // Show error state
+                    <EmptyState
+                      title="Error loading drafts"
+                      description="There was a problem loading your draft reports. Please try again."
+                      actionText="Retry"
+                      onAction={refetchDrafts}
                     />
-                  ))}
+                  ) : drafts.length === 0 ? (
+                    // Show empty state when no drafts
+                    <EmptyState
+                      title="No drafts yet"
+                      description="Create your first report to get started."
+                      actionText="Create Report"
+                      onAction={() => setCreateReport(true)}
+                    />
+                  ) : (
+                    // Show actual draft cards
+                    drafts.map((item, index) => (
+                      <ReportCard
+                        key={`draft-${item.id}`}
+                        {...item}
+                        onDelete={handleDeleteDraft}
+                      />
+                    ))
+                  )}
                 </div>
               </Box>
             </Box>
@@ -194,18 +221,35 @@ const Monitor = () => {
                 </Grid>
               </Box> */}
               <div className="drafts-container">
-                {readyReports?.reports?.map((report) => (
-                  // <ReportCard
-                  //   key={`draft-${item.id}`}
-                  //   {...item}
-                  //   onDelete={handleDeleteDraft}
-                  // />
-                  <ReportForVerification
-                    key={report?.id}
-                    {...report}
-                    onDelete={handleDeleteReadyReport}
+                {loadingReadyReports ? (
+                  // Show skeleton cards while loading
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <SkeletonCard key={`ready-skeleton-${index}`} />
+                  ))
+                ) : readyReportsErr ? (
+                  // Show error state
+                  <EmptyState
+                    title="Error loading reports"
+                    description="There was a problem loading your ready reports. Please try again."
+                    actionText="Retry"
+                    onAction={refetchReadyReports}
                   />
-                ))}
+                ) : !readyReports?.reports || readyReports.reports.length === 0 ? (
+                  // Show empty state when no ready reports
+                  <EmptyState
+                    title="No reports ready for vetting"
+                    description="Reports that are ready for vetting will appear here."
+                  />
+                ) : (
+                  // Show actual ready reports
+                  readyReports.reports.map((report) => (
+                    <ReportForVerification
+                      key={report?.id}
+                      {...report}
+                      onDelete={handleDeleteReadyReport}
+                    />
+                  ))
+                )}
               </div>
             </Box>
 
