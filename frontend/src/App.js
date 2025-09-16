@@ -98,7 +98,6 @@ import RegisterVerifyOtp from './loginpages/RegisterVerifyOtp';
 
 import DashBoard from './adminpages/Dashboard/DashBoard';
 import Monitor from './adminpages/Dashboard/Monitor';
-import TeamMembersDashboard from './adminpages/Dashboard/TeamMembersDashboard';
 import AllTabs from './adminpages/Dashboardddd/SideBar/Alltabs';
 import ForgotPassword from './adminpages/ForgotPassword';
 import LoginForm from './adminpages/Login';
@@ -157,7 +156,6 @@ function App() {
                 <Route path="/admin-dash" element={<DashBoard />}>
                   <Route index element={<Monitor />} />
                   <Route path="monitor" element={<Monitor />} />
-                  <Route path="team-members" element={<TeamMembersDashboard />} />
                   <Route path="reports" element={<CreateReport />} />
                   <Route path="subscriptions" element={<Monitor />} />
                   <Route path="all-tabs/:section" element={<AllTabs />} />

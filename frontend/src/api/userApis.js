@@ -2,7 +2,7 @@ import axios from '../instant/backAxios';
 
 export const getAllUsers = async () => {
   try {
-    const response = await axios.get('/users');
+    const response = await axios.get('/admin/all-user');
     return { data: response.data, error: null };
   } catch (error) {
     return { data: [], error: error.message };

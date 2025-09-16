@@ -1,3 +1,55 @@
+---
+## Workflow
+
+### 1. User Registration & Authentication
+- Users register and verify their email (OTP-based)
+- Login with credentials; JWT-based authentication
+- Role-based access (Admin, Super Admin, User)
+
+### 2. Data Entry (Frontend)
+- Users fill multi-step forms: Company Info → Production Details → Certifications → Documents Upload → Operational Data → Electrical, HVAC, SCADA, Building, etc.
+- Sidebar navigation for step progress
+- Data is validated and submitted to backend APIs
+
+### 3. Admin Dashboard
+- Admins can view/manage users, reports, and analytics
+- Assign roles, approve/reject reports, monitor submissions
+
+### 4. File Uploads & Reports
+- Users upload supporting documents (PDF, images, etc.)
+- Generate and preview PDF reports
+- Download or share reports
+
+### 5. Payments & Subscriptions
+- Stripe integration for subscription plans
+- Admins manage plans, view revenue analytics
+
+### 6. Notifications
+- Email notifications for registration, password reset, report status, etc. (SendGrid)
+
+### 7. Real-time Features
+- Chat and call booking (for support/admin)
+- Real-time updates via Socket.io
+---
+
+## New & Notable Features
+
+- Modular folder structure for easy scaling
+- Multi-role authentication and onboarding
+- Step-based data entry with autosave
+- PDF generation and preview
+- Stripe payment integration
+- Admin analytics dashboard
+- File/document upload and management
+- Real-time chat and call booking
+- Comprehensive error handling and validation
+
+---
+
+# Data Entry Tool
+
+A full-stack web application for streamlined data entry, management, and reporting. The project consists of a React frontend and a Node.js/Express backend, designed for easy collaboration and extensibility.
+
 # Data Entry Tool
 
 A full-stack web application for streamlined data entry, management, and reporting. The project consists of a React frontend and a Node.js/Express backend, designed for easy collaboration and extensibility.
@@ -7,13 +59,14 @@ A full-stack web application for streamlined data entry, management, and reporti
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Folder Structure](#folder-structure)
+- [Full File Structure & Descriptions](#full-file-structure--descriptions)
 - [Frontend (React)](#frontend-react)
 - [Backend (Nodejs--Express)](#backend-nodejs--express)
 - [Setup & Installation](#setup--installation)
 - [Running the Project](#running-the-project)
 - [Environment Variables](#environment-variables)
 - [Key Features](#key-features)
+- [Workflow](#workflow)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -25,40 +78,82 @@ This tool enables users to input, manage, and report on company, production, cer
 
 ---
 
-## Folder Structure
+## Full File Structure & Descriptions
+
+### Root
 
 ```
-├── frontend/           # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── adminpages/
-│   │   ├── assets/
-│   │   ├── context/
-│   │   ├── instant/
-│   │   ├── loginpages/
-│   │   ├── shared/
-│   │   ├── utils/
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json
-│
-├── SI Backend/         # Node.js/Express backend
-│   ├── src/
-│   │   ├── config/
-│   │   ├── middleware/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── socket/
-│   │   └── util/
-│   ├── dataEntryMiddle/
-│   ├── localStorage/
-│   ├── uploads/
-│   ├── index.js
-│   └── package.json
-│
-├── README.md
-└── ...
+├── README.md                # Project documentation
+├── frontend/                # React frontend app
+├── SI Backend/              # Node.js/Express backend app
 ```
+
+### Frontend (`frontend/`)
+
+```
+├── .env                     # Frontend environment variables
+├── .gitignore               # Git ignore rules
+├── api/                     # API utility functions/endpoints
+├── build/                   # Production build output (auto-generated)
+├── node_modules/            # Node.js dependencies (auto-generated)
+├── package.json             # Project metadata and dependencies
+├── public/                  # Static public assets (index.html, favicon, etc.)
+├── src/                     # Source code
+│   ├── adminpages/          # Admin dashboard, user management, etc.
+│   ├── api/                 # API endpoint helpers
+│   ├── assets/              # Images, SVGs, and static assets
+│   ├── components/          # Reusable React components
+│   ├── context/             # React context providers (Auth, Form, Org, etc.)
+│   ├── instant/             # Axios instances for API calls
+│   ├── loginpages/          # User-facing forms and data entry pages
+│   ├── shared/              # Shared UI elements (Sidebar, UploadFile, etc.)
+│   ├── theme/               # Theme and color configuration
+│   ├── utils/               # Utility functions and hooks
+│   ├── App.js               # Main React app component
+│   ├── App.css              # App-wide styles
+│   ├── index.js             # React entry point
+│   ├── index.css            # Global styles
+│   ├── logo.svg             # Logo asset
+│   ├── reportWebVitals.js   # Performance measuring
+│   ├── setupTests.js        # Test setup
+```
+
+#### Example: What do some files/folders do?
+
+- `adminpages/` - Admin dashboard, user management, analytics
+- `loginpages/` - Multi-step forms for company, production, certification, etc.
+- `shared/Sidebar.js` - Navigation sidebar for step-based forms
+- `utils/report.endpoints.js` - API endpoints for reports
+- `context/FormContext.js` - React context for form state
+
+### Backend (`SI Backend/`)
+
+```
+├── .env                     # Backend environment variables
+├── .gitignore               # Git ignore rules
+├── dataEntryMiddle/         # Custom Express middleware (auth, mail, etc.)
+├── index.js                 # Main backend entry point
+├── localStorage/            # Local JWT/session storage (dev only)
+├── node_modules/            # Node.js dependencies (auto-generated)
+├── output.txt               # Output logs (dev only)
+├── package.json             # Project metadata and dependencies
+├── src/                     # Source code
+│   ├── config/              # App config, DB connection
+│   ├── middleware/          # Express middleware (auth, error, quota, etc.)
+│   ├── models/              # Mongoose models and route controllers
+│   ├── routes/              # API route aggregators
+│   ├── socket/              # Socket.io setup
+│   ├── util/                # Utility functions (AWS S3, sendgrid, etc.)
+│   ├── index.js             # Express app setup
+├── uploads/                 # Uploaded files (user docs, etc.)
+```
+
+#### Example: What do some files/folders do?
+
+- `dataEntryMiddle/` - Custom middleware for authentication, mail, user logic
+- `src/models/` - Contains all business logic for users, reports, data entry, etc.
+- `src/routes/routesAll.js` - Aggregates all API routes
+- `uploads/` - Stores uploaded documents
 
 ---
 
@@ -92,23 +187,6 @@ npm start
 - Built with Express, Mongoose, JWT, SendGrid, Stripe, and more
 - Main entry: `SI Backend/index.js` and `SI Backend/src/index.js`
 - Features: REST APIs, authentication, role-based access, file uploads, Stripe integration, email notifications
-
-### Install dependencies
-
-```bash
-cd "SI Backend"
-npm install
-```
-
-### Run the backend
-
-```bash
-npm start
-```
-
-- Runs on [http://localhost:5000](http://localhost:5000) by default (configurable)
-
----
 
 ## Environment Variables
 
@@ -156,16 +234,3 @@ REACT_APP_API_URL=http://localhost:5000/api
 6. Access the app at [http://localhost:3000](http://localhost:3000)
 
 ---
-
-## Contributing
-
-- Fork the repo and create a new branch for your feature or bugfix
-- Follow the existing code style and structure
-- Add clear commit messages
-- Test your changes before submitting a pull request
-
----
-
-## License
-
-This project is licensed under the MIT License.
