@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import api from "../instant/backAxios";
+import { useEffect, useState } from 'react';
+import api from '../instant/backAxios';
 
 // Helper function to build query strings
 const buildQueryString = (baseUrl, params) => {
@@ -8,8 +8,8 @@ const buildQueryString = (baseUrl, params) => {
   // Add parameters to the query string
   Object.entries(params).forEach(([key, value]) => {
     if (Array.isArray(value)) {
-      query.append(key, value.join(",")); // Handle array values
-    } else if (value !== undefined && value !== null && value !== "") {
+      query.append(key, value.join(',')); // Handle array values
+    } else if (value !== undefined && value !== null && value !== '') {
       query.append(key, value); // Handle non-empty values
     }
   });

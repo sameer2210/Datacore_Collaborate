@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "../../../instant/axios";
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect, useState } from 'react';
+import axios from '../../../instant/backAxios';
 
 const AdminDashboard = () => {
   const [data, setData] = useState({
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -56,8 +56,8 @@ const AdminDashboard = () => {
 
         // ✅ Remove admin@gmail.com from users
         const uniqueUsers = Array.from(
-          new Map(userRes.data.data.map((u) => [u.email, u])).values()
-        ).filter((u) => u.email !== "admin@gmail.com");
+          new Map(userRes.data.data.map(u => [u.email, u])).values()
+        ).filter(u => u.email !== 'admin@gmail.com');
 
         setData({
           company: companyRes.data.data,
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
           users: uniqueUsers,
         });
       } catch (err) {
-        console.error("Error fetching dashboard data:", err);
+        console.error('Error fetching dashboard data:', err);
       } finally {
         setLoading(false);
       }
@@ -85,32 +85,32 @@ const AdminDashboard = () => {
 
   if (loading) return <p className="text-center p-4">Loading data...</p>;
 
-  const filterByUser = (arr) => {
+  const filterByUser = arr => {
     if (!selectedUser) return [];
-    return arr.filter((item) => {
+    return arr.filter(item => {
       const uid = item.userId || item.user_id;
       return uid === selectedUser._id;
     });
   };
 
-  const renderValue = (value) => {
-    if (value === null || value === undefined) return "-";
-    if (typeof value === "object") {
-      if (Array.isArray(value)) return value.map(renderValue).join(", ");
-      return Object.values(value).map(renderValue).join(", ");
+  const renderValue = value => {
+    if (value === null || value === undefined) return '-';
+    if (typeof value === 'object') {
+      if (Array.isArray(value)) return value.map(renderValue).join(', ');
+      return Object.values(value).map(renderValue).join(', ');
     }
-    if (typeof value === "boolean") return value ? "Yes" : "No";
+    if (typeof value === 'boolean') return value ? 'Yes' : 'No';
     return value.toString();
   };
 
-  const renderVerticalDetails = (dataset) => {
+  const renderVerticalDetails = dataset => {
     if (!dataset.length) return <p className="text-muted">No data available</p>;
     const item = dataset[0];
     return (
       <div className="row g-2">
         {Object.entries(item).map(([key, val]) => (
           <div className="col-12 d-flex border-bottom py-1" key={key}>
-            <div className="fw-bold text-secondary" style={{ width: "200px" }}>
+            <div className="fw-bold text-secondary" style={{ width: '200px' }}>
               {key}
             </div>
             <div className="flex-grow-1">{renderValue(val)}</div>
@@ -127,18 +127,18 @@ const AdminDashboard = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setData((prev) => ({
+        setData(prev => ({
           ...prev,
-          users: prev.users.filter((u) => u._id !== userId),
+          users: prev.users.filter(u => u._id !== userId),
         }));
 
-        alert("User and all related data deleted successfully!");
+        alert('User and all related data deleted successfully!');
         if (selectedUser && selectedUser._id === userId) {
           setSelectedUser(null);
         }
       } catch (err) {
-        console.error("Delete error:", err);
-        alert("Failed to delete user.");
+        console.error('Delete error:', err);
+        alert('Failed to delete user.');
       }
     }
   };
@@ -149,10 +149,7 @@ const AdminDashboard = () => {
       {!selectedUser && (
         <div className="card shadow-sm border-0">
           <div className="card-header bg-light fw-bold">All Users</div>
-          <div
-            className="table-responsive"
-            style={{ maxHeight: "75vh", overflowY: "auto" }}
-          >
+          <div className="table-responsive" style={{ maxHeight: '75vh', overflowY: 'auto' }}>
             <table className="table table-hover align-middle mb-0">
               <thead className="table-light">
                 <tr>
@@ -221,9 +218,7 @@ const AdminDashboard = () => {
               <div className="col-12" key={title}>
                 <div className="card shadow-sm border-0">
                   <div className="card-header bg-light fw-bold">{title}</div>
-                  <div className="card-body">
-                    {renderVerticalDetails(filterByUser(dataset))}
-                  </div>
+                  <div className="card-body">{renderVerticalDetails(filterByUser(dataset))}</div>
                 </div>
               </div>
             ))}

@@ -1,13 +1,11 @@
-import React from "react";
-
-const GradientButton = (props) => {
+const GradientButton = props => {
   const {
     onClick,
     children,
-    width = "auto",
-    height = "auto",
-    fontSize = "0.875rem",
-    type = "button",
+    width = 'auto',
+    height = 'auto',
+    fontSize = '0.875rem',
+    type = 'button',
     ...other
   } = props;
   return (

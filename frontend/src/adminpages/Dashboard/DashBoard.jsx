@@ -1,10 +1,7 @@
-import React, { useRef, useState } from "react";
-import "./DashBoard.css";
-import { Outlet } from "react-router-dom";
-import SideBar from "./SideBar/SideBar";
-import TopBar from "./TopBar";
-
-
+import { Outlet } from 'react-router-dom';
+import './DashBoard.css';
+import SideBar from './SideBar/SideBar';
+import TopBar from './TopBar';
 
 function DashBoard() {
   return (

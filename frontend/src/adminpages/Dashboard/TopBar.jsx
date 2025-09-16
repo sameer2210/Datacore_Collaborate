@@ -1,30 +1,16 @@
 /* eslint-disable no-unused-vars */
-import {
-  Box,
-  Menu,
-  MenuItem,
-  Typography,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
-} from "@mui/material";
-import React, { useRef, useState, useEffect } from "react";
-import emptyuser from "../../assets/emptyuser.avif";
-import logoutImg from "../../assets/logout.svg";
-import chat from "../../assets/chats.svg";
-import bell from "../../assets/bell.svg";
-import { useNavigate } from "react-router-dom";
-import useAuthContext from "../../context/AuthContext";
-import GradientButton from "../common/GradientButton";
-import OutlinedButton from "../common/OutlinedButton";
-import LogoutDialog from "./LogoutDialog";
-import useOrganizationContext from "../../context/OrgContext";
-import constant from "../../constant";
-import ChatTray from "./ChatTray";
-import { getAllChatMessages } from "../../api/chat";
+import { Box, Menu, MenuItem, Typography } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAllChatMessages } from '../../api/chat';
+import chat from '../../assets/chats.svg';
+import emptyuser from '../../assets/emptyuser.avif';
+import logoutImg from '../../assets/logout.svg';
+import constant from '../../constant';
+import useAuthContext from '../../context/AuthContext';
+import useOrganizationContext from '../../context/OrgContext';
+import ChatTray from './ChatTray';
+import LogoutDialog from './LogoutDialog';
 
 const TopBar = () => {
   const chatIconRef = useRef(null);
@@ -35,7 +21,7 @@ const TopBar = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [UnreadNotification, setUnreadNotification] = useState([]);
   const open = Boolean(anchorEl);
-  console.log("userData", userData);
+  console.log('userData', userData);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -47,7 +33,7 @@ const TopBar = () => {
           setUnreadNotification(response.data.totalUnReadMessages);
         }
       } catch (error) {
-        console.error("Error fetching messages:", error);
+        console.error('Error fetching messages:', error);
       }
     };
 
@@ -56,9 +42,9 @@ const TopBar = () => {
 
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
-  console.log("fetching messages", UnreadNotification);
+  console.log('fetching messages', UnreadNotification);
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -81,35 +67,35 @@ const TopBar = () => {
     // Perform logout
     logout();
     handleDialogClose();
-    navigate("/login");
+    navigate('/login');
   };
 
   const isProfileImageValid =
-    userData?.profileImage !== "null" &&
+    userData?.profileImage !== 'null' &&
     userData?.profileImage !== null &&
     userData?.profileImage !== undefined &&
-    userData?.profileImage !== "";
+    userData?.profileImage !== '';
 
   return (
     <div
       style={{
-        height: "50px",
-        backgroundColor: "#fff",
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        gap: "1.5rem",
-        borderBottom: "1px solid #EFEFEF",
-        padding: "10px 0",
+        height: '50px',
+        backgroundColor: '#fff',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        gap: '1.5rem',
+        borderBottom: '1px solid #EFEFEF',
+        padding: '10px 0',
       }}
     >
       <div
         ref={chatIconRef} // Add this ref
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          position: "relative",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'relative',
         }}
       >
         <img
@@ -117,23 +103,23 @@ const TopBar = () => {
           alt="logo"
           height={28}
           width={28}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
           onClick={() => setIsChatOpen(!isChatOpen)} // Toggle chat tray
         />
         <div
           style={{
-            position: "absolute",
-            height: "13px",
-            width: "13px",
-            backgroundColor: "#FF3A3A",
-            borderRadius: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            top: "-5px",
-            right: "-2px",
-            color: "#fff",
-            fontSize: "8px",
+            position: 'absolute',
+            height: '13px',
+            width: '13px',
+            backgroundColor: '#FF3A3A',
+            borderRadius: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            top: '-5px',
+            right: '-2px',
+            color: '#fff',
+            fontSize: '8px',
           }}
         >
           {UnreadNotification}
@@ -176,43 +162,39 @@ const TopBar = () => {
       </div> */}
       <Box
         sx={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          mr: "1.5rem",
-          gap: "0.5rem",
-          cursor: "pointer",
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          mr: '1.5rem',
+          gap: '0.5rem',
+          cursor: 'pointer',
         }}
       >
         <img
-          src={
-            isProfileImageValid
-              ? `${constant.IMG_URL}/${userData?.profileImage}`
-              : emptyuser
-          }
+          src={isProfileImageValid ? `${constant.IMG_URL}/${userData?.profileImage}` : emptyuser}
           alt="logo"
           height={40}
           width={40}
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: '50%' }}
         />
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            cursor: "pointer", // Make the box look clickable
+            display: 'flex',
+            flexDirection: 'column',
+            cursor: 'pointer', // Make the box look clickable
           }}
           onClick={handleClick}
         >
           <Typography
             sx={{
-              display: "flex",
-              gap: "0.5rem",
-              alignItems: "center",
-              color: "black",
-              fontWeight: "500",
-              fontFamily: "Inter",
-              fontSize: "14px",
+              display: 'flex',
+              gap: '0.5rem',
+              alignItems: 'center',
+              color: 'black',
+              fontWeight: '500',
+              fontFamily: 'Inter',
+              fontSize: '14px',
             }}
           >
             {userData?.name}
@@ -228,22 +210,17 @@ const TopBar = () => {
               </g>
               <defs>
                 <clipPath id="clip0_989_10189">
-                  <rect
-                    width="20"
-                    height="20"
-                    fill="white"
-                    transform="translate(0 0.5)"
-                  />
+                  <rect width="20" height="20" fill="white" transform="translate(0 0.5)" />
                 </clipPath>
               </defs>
             </svg>
           </Typography>
           <Typography
             sx={{
-              width: "max-content",
-              color: "#B7B7B7",
+              width: 'max-content',
+              color: '#B7B7B7',
               fontSize: 12,
-              fontFamily: "Inter",
+              fontFamily: 'Inter',
             }}
           >
             Admin
@@ -251,23 +228,23 @@ const TopBar = () => {
         </Box>
       </Box>
       <Menu
-        sx={{ borderRadius: "10px" }}
+        sx={{ borderRadius: '10px' }}
         id="account-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: 'top',
+          horizontal: 'left',
         }}
         slotProps={{
           paper: {
             sx: {
-              borderRadius: "10px",
+              borderRadius: '10px',
               p: 0,
             },
           },
@@ -275,31 +252,29 @@ const TopBar = () => {
       >
         <MenuItem
           onClick={() => {
-            navigate("/manage-account");
+            navigate('/manage-account');
             handleClose();
           }}
-          sx={{ padding: "10px 12px" }}
+          sx={{ padding: '10px 12px' }}
         >
           <Box
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "10px",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px',
             }}
           >
             <img
               src={
-                isProfileImageValid
-                  ? `${constant.IMG_URL}/${userData?.profileImage}`
-                  : emptyuser
+                isProfileImageValid ? `${constant.IMG_URL}/${userData?.profileImage}` : emptyuser
               }
               alt="logo"
               height={25}
               width={25}
-              style={{ borderRadius: "50%" }}
+              style={{ borderRadius: '50%' }}
             />
-            <Typography variant="subtitle1" sx={{ fontSize: "14px" }}>
+            <Typography variant="subtitle1" sx={{ fontSize: '14px' }}>
               Manage Account
             </Typography>
           </Box>
@@ -309,21 +284,18 @@ const TopBar = () => {
             handleDialogOpen(); // Open the confirmation dialog
             handleClose();
           }}
-          sx={{ padding: "10px 12px" }}
+          sx={{ padding: '10px 12px' }}
         >
           <Box
             style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "10px",
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px',
             }}
           >
             <img src={logoutImg} alt="logo" height={24} width={24} />
-            <Typography
-              variant="subtitle1"
-              sx={{ color: "#F27878", fontSize: "14px" }}
-            >
+            <Typography variant="subtitle1" sx={{ color: '#F27878', fontSize: '14px' }}>
               Logout
             </Typography>
           </Box>
@@ -344,7 +316,7 @@ const TopBar = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        
+
           <OutlinedButton onClick={handleDialogClose}>Cancel</OutlinedButton>
           <GradientButton onClick={handleLogout}>Yes</GradientButton>
         </DialogActions>
@@ -354,13 +326,9 @@ const TopBar = () => {
         open={openDialog}
         onClose={handleDialogClose}
         onConfirm={handleLogout}
-        text='Do you want to logout?'
+        text="Do you want to logout?"
       />
-      <ChatTray
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
-        anchorRef={chatIconRef}
-      />
+      <ChatTray isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} anchorRef={chatIconRef} />
     </div>
   );
 };

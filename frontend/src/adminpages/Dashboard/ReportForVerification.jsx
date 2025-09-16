@@ -1,18 +1,17 @@
-import React from "react";
-import "./dashboardStyles.css";
-import threeDots from "../../assets/threeDots.svg";
-import { Link } from "react-router-dom";
-import { convertDateToDDMMYYYY } from "../../utils/dateFunctions";
-import trash from "../../assets/trash.svg";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from '@mui/material';
+import { Link } from 'react-router-dom';
+import threeDots from '../../assets/threeDots.svg';
+import trash from '../../assets/trash.svg';
+import { convertDateToDDMMYYYY } from '../../utils/dateFunctions';
+import './dashboardStyles.css';
 const ReportForVerification = ({ onDelete, ...report }) => {
   // console.log(report);
   const { id, name, year, segment, organizationDetails, grade, score } = report;
-  
-  const handleDelete = (e) => {
+
+  const handleDelete = e => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Deleting report with id:", id);
+    console.log('Deleting report with id:', id);
     if (onDelete) {
       onDelete(report.id);
     }
@@ -22,9 +21,9 @@ const ReportForVerification = ({ onDelete, ...report }) => {
       target="_blank"
       to={`/score-card/${id}`}
       style={{
-        textDecoration: "none",
-        color: "black",
-        display: "inline-block",
+        textDecoration: 'none',
+        color: 'black',
+        display: 'inline-block',
       }}
     >
       <div className="verification_card">
@@ -36,10 +35,7 @@ const ReportForVerification = ({ onDelete, ...report }) => {
             </h3>
           </div>
           <div className="verification_card-status_container">
-            <div
-              className="verification_card-status_div"
-              style={{ backgroundColor: "#FFCBC4" }}
-            >
+            <div className="verification_card-status_div" style={{ backgroundColor: '#FFCBC4' }}>
               Not Verified
             </div>
 
@@ -50,14 +46,14 @@ const ReportForVerification = ({ onDelete, ...report }) => {
                     onClick={handleDelete}
                     size="small"
                     sx={{
-                      color: "red",
-                      fontSize: "12px",
-                      "&:hover": {
-                        backgroundColor: "transparent", // Remove hover background
+                      color: 'red',
+                      fontSize: '12px',
+                      '&:hover': {
+                        backgroundColor: 'transparent', // Remove hover background
                       },
-                      padding: "4px", // Add some padding around text and icon
-                      display: "flex",
-                      gap: "4px", // Space between icon and text
+                      padding: '4px', // Add some padding around text and icon
+                      display: 'flex',
+                      gap: '4px', // Space between icon and text
                     }}
                     disableRipple // Remove ripple effect
                   >
@@ -68,19 +64,19 @@ const ReportForVerification = ({ onDelete, ...report }) => {
                 componentsProps={{
                   tooltip: {
                     sx: {
-                      bgcolor: "white",
-                      "& .MuiTooltip-arrow": {
-                        color: "red",
+                      bgcolor: 'white',
+                      '& .MuiTooltip-arrow': {
+                        color: 'red',
                       },
-                      boxShadow: "0px 2px 5px rgba(0,0,0,0.15)",
-                      borderRadius: "8px",
+                      boxShadow: '0px 2px 5px rgba(0,0,0,0.15)',
+                      borderRadius: '8px',
                     },
                   },
                 }}
               >
                 <IconButton size="small">
                   <img
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     src={threeDots}
                     height={20}
                     width={20}
@@ -97,15 +93,11 @@ const ReportForVerification = ({ onDelete, ...report }) => {
             {/* 65% */}
             {score?.toFixed(2) ?? 65}%
           </span>
-          <span className="verification_card-percent-name">
-            Sustainability Index Score Card
-          </span>
+          <span className="verification_card-percent-name">Sustainability Index Score Card</span>
         </div>
 
         <div className="verification_card-grading_container">
-          <span className="verification_card-grade">
-            {grade ?? "BC"} Overall Grade
-          </span>
+          <span className="verification_card-grade">{grade ?? 'BC'} Overall Grade</span>
           <span className="verification_card-grade_date">
             {convertDateToDDMMYYYY(report?.updatedAt)}
           </span>

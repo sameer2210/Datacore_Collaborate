@@ -5,7 +5,6 @@ const axiosInstance = axios.create({
   baseURL: 'http://localhost:8000/api/data-entry',
 });
 
-// Request interceptor → हर request से पहले token set होगा
 axiosInstance.interceptors.request.use(
   config => {
     const token = localStorage.getItem('token');
