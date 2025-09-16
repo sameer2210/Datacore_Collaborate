@@ -43,17 +43,17 @@ function SideBar() {
 
   // All tabs data
   const allTabsItems = [
-    { name: 'Companies', path: 'all-tabs/company', icon: '🏢' },
-    { name: 'Production', path: 'all-tabs/production', icon: '⚙️' },
-    { name: 'Operational', path: 'all-tabs/operational', icon: '📊' },
-    { name: 'Electrical', path: 'all-tabs/electrical', icon: '⚡' },
-    { name: 'Certifications', path: 'all-tabs/certifications', icon: '📜' },
-    { name: 'Uploads', path: 'all-tabs/uploads', icon: '📁' },
-    { name: 'HVAC', path: 'all-tabs/hvac', icon: '🌡️' },
-    { name: 'SCADA', path: 'all-tabs/scada', icon: '💻' },
-    { name: 'Thermal', path: 'all-tabs/thermal', icon: '🔥' },
-    { name: 'Equipment', path: 'all-tabs/equipment', icon: '🔧' },
-    { name: 'PDF Files', path: 'all-tabs/pdf', icon: '📄' },
+    { name: 'Companies', path: 'all-tabs/company', icon: '-' },
+    { name: 'Production', path: 'all-tabs/production', icon: '-' },
+    { name: 'Operational', path: 'all-tabs/operational', icon: '-' },
+    { name: 'Electrical', path: 'all-tabs/electrical', icon: '-' },
+    { name: 'Certifications', path: 'all-tabs/certifications', icon: '-' },
+    { name: 'Uploads', path: 'all-tabs/uploads', icon: '-' },
+    { name: 'HVAC', path: 'all-tabs/hvac', icon: '-' },
+    { name: 'SCADA', path: 'all-tabs/scada', icon: '-' },
+    { name: 'Thermal', path: 'all-tabs/thermal', icon: '-' },
+    { name: 'Equipment', path: 'all-tabs/equipment', icon: '-' },
+    { name: 'PDF Files', path: 'all-tabs/pdf', icon: '-' },
   ];
 
   const toggleAllTabs = () => {
