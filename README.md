@@ -1,4 +1,3 @@
-![login](/data%20entry%20tool/show/l.jpeg)
 ![login](./show/l.jpeg)
 
 ---
@@ -62,7 +61,7 @@
 
 A full-stack web application for streamlined data entry, management, and reporting. The project consists of a React frontend and a Node.js/Express backend, designed for easy collaboration and extensibility.
 
-![dashboard](/data%20entry%20tool/show/d.jpeg)
+![dashboard](./show/d.jpeg)
 
 ---
 
@@ -174,7 +173,7 @@ This tool enables users to input, manage, and report on company, production, cer
 - Main entry: `frontend/src/App.js`
 - Key features: Multi-step forms, dashboards, authentication, PDF generation, charts, and responsive design
 
-![sub](/data%20entry%20tool/show/s.jpeg)
+![sub](./show/s.jpeg)
 
 ### Install dependencies
 
