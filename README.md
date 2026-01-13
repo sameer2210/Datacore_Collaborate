@@ -1,35 +1,45 @@
+![login](/data%20entry%20tool/show/l.jpeg)
 ---
+
 ## Workflow
 
 ### 1. User Registration & Authentication
+
 - Users register and verify their email (OTP-based)
 - Login with credentials; JWT-based authentication
 - Role-based access (Admin, Super Admin, User)
 
 ### 2. Data Entry (Frontend)
+
 - Users fill multi-step forms: Company Info → Production Details → Certifications → Documents Upload → Operational Data → Electrical, HVAC, SCADA, Building, etc.
 - Sidebar navigation for step progress
 - Data is validated and submitted to backend APIs
 
 ### 3. Admin Dashboard
+
 - Admins can view/manage users, reports, and analytics
 - Assign roles, approve/reject reports, monitor submissions
 
 ### 4. File Uploads & Reports
+
 - Users upload supporting documents (PDF, images, etc.)
 - Generate and preview PDF reports
 - Download or share reports
 
 ### 5. Payments & Subscriptions
+
 - Stripe integration for subscription plans
 - Admins manage plans, view revenue analytics
 
 ### 6. Notifications
+
 - Email notifications for registration, password reset, report status, etc. (SendGrid)
 
 ### 7. Real-time Features
+
 - Chat and call booking (for support/admin)
 - Real-time updates via Socket.io
+
 ---
 
 ## New & Notable Features
@@ -50,9 +60,7 @@
 
 A full-stack web application for streamlined data entry, management, and reporting. The project consists of a React frontend and a Node.js/Express backend, designed for easy collaboration and extensibility.
 
-# Data Entry Tool
-
-A full-stack web application for streamlined data entry, management, and reporting. The project consists of a React frontend and a Node.js/Express backend, designed for easy collaboration and extensibility.
+![dashboard](/data%20entry%20tool/show/d.jpeg)
 
 ---
 
@@ -163,6 +171,8 @@ This tool enables users to input, manage, and report on company, production, cer
 - Built with React 18, React Router, Bootstrap, MUI, Chart.js, and more
 - Main entry: `frontend/src/App.js`
 - Key features: Multi-step forms, dashboards, authentication, PDF generation, charts, and responsive design
+
+![sub](/data%20entry%20tool/show/s.jpeg)
 
 ### Install dependencies
 
